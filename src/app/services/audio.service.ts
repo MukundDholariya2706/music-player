@@ -26,6 +26,7 @@ export class AudioService {
     'canplay',
     'loadedmetadata',
     'loadstart',
+    'volumechange',
   ];
 
   private state: StreamState = {
@@ -36,6 +37,7 @@ export class AudioService {
     currentTime: undefined,
     canplay: false,
     error: false,
+    volume: 1,
   };
 
   private stateChange: BehaviorSubject<StreamState> = new BehaviorSubject(
@@ -56,6 +58,12 @@ export class AudioService {
 
   seekTo(seconds: number) {
     this.audioObj.currentTime = seconds;
+  }
+
+  volumeChange(volume: number) {
+    this.audioObj.volume = volume;
+    this.state.volume = volume;
+    this.stateChange.next(this.state);
   }
 
   formatTime(time: number, format: string = 'HH:mm:ss') {
@@ -141,6 +149,7 @@ export class AudioService {
 
   private resetState() {
     this.state = {
+      volume: 1,
       playing: false,
       readableCurrentTime: '',
       readableDuration: '',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
 import { StreamState } from 'src/app/interfaces/stream-state';
 import { AudioService } from 'src/app/services/audio.service';
 import { CloudService } from 'src/app/services/cloud.service';
@@ -76,5 +77,9 @@ export class PlayerComponent implements OnInit {
 
   onSliderChangeEnd(change: any) {
     this.audioService.seekTo(change.value);
+  }
+
+  onVolumeChange(event: MatSliderChange){
+    this.audioService.volumeChange(event.value as number)
   }
 }
